@@ -1,0 +1,64 @@
+<div class="page">
+
+  <!-- Background layers -->
+  <div class="bg-overlay"></div>
+  <div class="sun"></div>
+
+  <div class="cloud cloud1"></div>
+  <div class="cloud cloud2"></div>
+  <div class="cloud cloud3"></div>
+
+  <!-- Main Card -->
+  <div class="container glass glow">
+
+    <h2>🌤 Weather Search</h2>
+
+    <div class="search-box">
+      <input
+        type="text"
+        placeholder="Enter city name"
+        [(ngModel)]="city"
+        (keyup.enter)="searchWeather()"
+      />
+      <button (click)="searchWeather()">Search</button>
+    </div>
+
+    <!-- ❌ Error -->
+    <p class="error" *ngIf="errorMsg">
+      {{ errorMsg }}
+    </p>
+
+    <!-- ✅ Weather Card -->
+    <div *ngIf="weatherData" class="card fade-in">
+
+      <!-- ⏳ Loader INSIDE card -->
+      <div *ngIf="loading" class="spinner">
+        <div class="loader"></div>
+        <p>Loading...</p>
+      </div>
+
+      <!-- ✅ Data -->
+      <div *ngIf="!loading">
+        <h3>{{ weatherData.city }}, {{ weatherData.country }}</h3>
+
+        <img
+          class="icon"
+          [src]="'https://openweathermap.org/img/wn/' + weatherData.icon + '@2x.png'"
+          alt="weather icon"
+        />
+
+        <p>🌡 Temperature: {{ weatherData.temperature }} °C</p>
+        <p>🤒 Feels Like: {{ weatherData.feelsLike }} °C</p>
+        <p>💧 Humidity: {{ weatherData.humidity }} %</p>
+        <p>🌬 Wind Speed: {{ weatherData.windSpeed }} m/s</p>
+        <p>☁ Condition: {{ weatherData.description }}</p>
+
+        <p *ngIf="weatherData.cachedAt">
+          ⏱ Last Updated: {{ weatherData.cachedAt }}
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</div>
